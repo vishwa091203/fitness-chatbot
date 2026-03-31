@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from openai import OpenAI
 
-api_key = st.secrets["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"]
+api_key = st.secrets["OPENROUTER_API_KEY"]
 
 
 client = OpenAI(
