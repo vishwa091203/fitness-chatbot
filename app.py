@@ -98,7 +98,7 @@ USER QUESTION:
 
 ANSWER:"""
     response = client.chat.completions.create(
-        model="openai/gpt-4o-mini",
+        model="meta-llama/llama-3.2-3b-instruct:free",
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content
