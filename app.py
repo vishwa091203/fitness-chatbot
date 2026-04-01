@@ -13,24 +13,76 @@ client = Groq(api_key=api_key)
 # YOUR PDF CONTENT — paste your PDF text here
 # ============================================================
 workout_text = """
-Workout Split Guide.
-Day 1 is Chest and Triceps. Do Bench Press for 4 sets of 10 reps. Do Tricep Pushdowns for 3 sets of 12 reps.
-Day 2 is Back and Biceps. Do Pull Ups for 4 sets of 8 reps. Do Barbell Curls for 3 sets of 10 reps.
-Day 3 is Rest Day.
-Day 4 is Shoulders. Do Overhead Press for 4 sets of 10 reps. Do Lateral Raises for 3 sets of 15 reps.
-Day 5 is Legs. Do Squats for 4 sets of 10 reps. Do Leg Press for 3 sets of 12 reps.
-Day 6 and Day 7 are Rest Days.
+COMPLETE WORKOUT GUIDE
+
+Introduction to Fitness Goals
+Fitness training should always be based on a clear goal such as weight loss, weight gain, or muscle gain. Each goal requires a different approach in terms of exercises, intensity, and frequency. Without a clear goal, workouts become random and results will be slow or inconsistent. A structured plan helps in tracking progress and staying motivated over time.
+
+Types of Workout Goals
+Weight Loss: Weight loss focuses on burning calories and reducing body fat. This involves a combination of cardio exercises and light to moderate weight training. Higher repetitions with shorter rest periods help in increasing calorie burn and improving endurance.
+Weight Gain: Weight gain focuses on increasing overall body mass. This requires strength training with moderate repetitions and slightly heavier weights. The goal is to stimulate muscle growth while also maintaining a calorie surplus.
+Muscle Gain: Muscle gain, also called hypertrophy, focuses on building muscle size and strength. This involves lifting heavier weights with controlled movements. Rest periods are slightly longer to allow muscles to recover between sets.
+
+Workout Split
+Workout split refers to how you divide your workouts across the week. Beginners can start with full-body workouts three times a week, which helps in building a strong foundation. Intermediate individuals can follow upper-body and lower-body splits to train more effectively. Advanced individuals often use push, pull, and leg splits to target specific muscle groups and maximize growth.
+
+Training Intensity
+Training intensity refers to how hard your workout is. It is usually based on the percentage of maximum weight you can lift. Beginners should start with lighter weights and focus on proper form. As strength improves, weights should be increased gradually. This concept is known as progressive overload and is essential for muscle growth and strength improvement.
+
+Strength Training
+Strength training involves lifting weights to build muscle and improve strength. It includes compound exercises like squats, deadlifts, and bench press, which target multiple muscles at once. It also includes isolation exercises like bicep curls and tricep extensions, which focus on specific muscles. Proper form and controlled movements are very important to avoid injuries and maximize results.
+
+Cardio Training
+Cardio exercises improve heart health and help in burning calories. There are different types of cardio such as walking, jogging, cycling, and high-intensity interval training (HIIT). For weight loss, cardio should be done frequently. For muscle gain or weight gain, cardio should be limited so that it does not interfere with muscle recovery.
+
+Weekly Workout Plan
+A weekly workout plan should be balanced and realistic. For weight loss, 5 to 6 workout days including cardio and weights are recommended. For muscle gain, 4 to 5 days of strength training with limited cardio works best. For weight gain, focus more on strength training with minimal cardio. Consistency is more important than doing very intense workouts occasionally.
+
+Rest and Recovery
+Rest and recovery are essential parts of any fitness plan. Muscles grow when you rest, not when you are working out. You should aim for 7 to 9 hours of sleep daily. At least one or two rest days per week are necessary to allow the body to recover and prevent injuries.
+
+Progression Strategy
+Progression means gradually increasing the difficulty of your workouts. This can be done by increasing weights, repetitions, or sets over time. Tracking your workouts helps you understand your progress and keeps you motivated. Without progression, the body adapts and results will stop.
+
+Common Mistakes
+Common mistakes include skipping warm-ups, using improper form, overtraining, and not being consistent. Avoiding these mistakes can significantly improve your results and reduce the risk of injuries.
 """
 
 diet_text = """
-Diet Guide.
-Breakfast should include Oats with banana and peanut butter.
-Lunch should include Chicken with rice and vegetables.
-Dinner should include Salmon with sweet potato and broccoli.
-Snacks can be Greek yogurt, nuts, or protein shake.
-Drink at least 3 litres of water every day.
-Daily protein target is 150 grams.
-Daily calories target is 2500 calories.
+COMPLETE DIET AND NUTRITION GUIDE
+
+Introduction to Nutrition
+Nutrition is the foundation of fitness. No matter how hard you train, without a proper diet you will not see good results. A balanced diet provides energy, supports recovery, and helps in achieving your fitness goals effectively.
+
+Macronutrients
+Macronutrients are nutrients required in large amounts. Protein helps in muscle repair and growth. Carbohydrates provide energy for daily activities and workouts. Fats support hormone function and overall health. A proper balance of all three is necessary for optimal performance.
+
+Micronutrients
+Micronutrients include vitamins and minerals that are required in smaller amounts but are equally important. They help in immunity, recovery, and overall body functions. Fruits and vegetables are the best sources of micronutrients.
+
+Diet for Weight Loss
+Weight loss requires a calorie deficit, which means consuming fewer calories than you burn. Focus on high-protein foods, reduce sugar intake, and avoid processed foods. Eating whole foods and maintaining portion control is key.
+
+Diet for Weight Gain
+Weight gain requires a calorie surplus, meaning you consume more calories than you burn. Include calorie-dense foods like rice, nuts, milk, and healthy fats. Eating frequent meals throughout the day helps in increasing calorie intake.
+
+Diet for Muscle Gain
+Muscle gain requires a balanced diet with high protein, moderate carbohydrates, and healthy fats. Post-workout nutrition is very important as it helps in muscle recovery and growth.
+
+Protein Intake
+Protein intake depends on your body weight and fitness goals. For muscle gain, you should consume around 1.6 to 2.2 grams of protein per kilogram of body weight. Good sources include eggs, chicken, paneer, lentils, and protein supplements.
+
+Fiber and Digestion
+Fiber is important for digestion and gut health. It helps prevent constipation and improves nutrient absorption. Include fruits, vegetables, and whole grains in your daily diet.
+
+Hydration
+Water is essential for all body functions. Staying hydrated improves performance, digestion, and recovery. You should aim to drink at least 3 to 4 liters of water daily.
+
+Sample Diet Plans
+For weight loss, include low-calorie and high-protein meals such as oats, vegetables, and lean protein. For weight gain, include calorie-rich meals like rice, eggs, milk, and nuts. For muscle gain, include protein in every meal and maintain a balanced intake of all nutrients.
+
+Common Diet Mistakes
+Common mistakes include skipping meals, not consuming enough protein, eating too much junk food, and not tracking calorie intake. Avoiding these mistakes will help you achieve your fitness goals faster and more effectively.
 """
 
 full_text = workout_text + "\n\n" + diet_text
