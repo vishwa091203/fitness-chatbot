@@ -14,7 +14,21 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 # YOUR PDF CONTENT
 # ============================================================
 workout_text = """
-PASTE YOUR WORKOUT PDF TEXT HERE
+%PDF-1.7
+%����
+1 0 obj
+<</Type/Catalog/Pages 2 0 R/Lang(en) /StructTreeRoot 33 0 R/MarkInfo<</Marked true>>/Metadata 144 0 R/ViewerPreferences 145 0 R>>
+endobj
+2 0 obj
+<</Type/Pages/Count 3/Kids[ 3 0 R 28 0 R 30 0 R] >>
+endobj
+3 0 obj
+<</Type/Page/Parent 2 0 R/Resources<</Font<</F1 5 0 R/F2 12 0 R/F3 17 0 R/F4 19 0 R/F5 24 0 R/F6 26 0 R>>/ExtGState<</GS10 10 0 R/GS11 11 0 R>>/ProcSet[/PDF/Text/ImageB/ImageC/ImageI] >>/MediaBox[ 0 0 595.32 841.92] /Contents 4 0 R/Group<</Type/Group/S/Transparency/CS/DeviceRGB>>/Tabs/S/StructParents 0>>
+endobj
+4 0 obj
+<</Filter/FlateDecode/Length 3455>>
+stream
+x��\K�#��0�������
 """
 
 diet_text = """
