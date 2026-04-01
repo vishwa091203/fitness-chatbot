@@ -129,10 +129,27 @@ def get_embeddings(texts):
             headers=headers,
             json={"inputs": text, "options": {"wait_for_model": True}}
         )
-        embedding = response.json()
-        # Handle nested list response
-        if isinstance(embedding[0], list):
-            embedding = embedding[0]
+        result = response.json()
+        
+        # Handle all possible response formats from HuggingFace
+        if isinstance(result, list):
+            if len(result) > 0 and isinstance(result[0], list):
+                # Format: [[0.1, 0.2, ...]] → take first item
+                embedding = result[0]
+                if isinstance(embedding[0], list):
+                    # Format: [[[0.1, 0.2, ...]]] → average across tokens
+                    embedding = np.mean(embedding, axis=0).tolist()
+            else:
+                # Format: [0.1, 0.2, ...] → use directly
+                embedding = result
+        elif isinstance(result, dict) and "error" in result:
+            # API returned an error - show it clearly
+            st.error(f"HuggingFace API error: {result['error']}")
+            st.stop()
+        else:
+            st.error(f"Unexpected response: {result}")
+            st.stop()
+            
         all_embeddings.append(embedding)
     
     return np.array(all_embeddings, dtype="float32")
