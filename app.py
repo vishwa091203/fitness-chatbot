@@ -32,7 +32,34 @@ x��\K�#��0�������
 """
 
 diet_text = """
-PASTE YOUR DIET PDF TEXT HERE
+%PDF-1.7
+%����
+1 0 obj
+<</Type/Catalog/Pages 2 0 R/Lang(en) /StructTreeRoot 33 0 R/MarkInfo<</Marked true>>/Metadata 152 0 R/ViewerPreferences 153 0 R>>
+endobj
+2 0 obj
+<</Type/Pages/Count 3/Kids[ 3 0 R 28 0 R 30 0 R] >>
+endobj
+3 0 obj
+<</Type/Page/Parent 2 0 R/Resources<</Font<</F1 5 0 R/F2 12 0 R/F3 17 0 R/F4 19 0 R/F5 24 0 R/F6 26 0 R>>/ExtGState<</GS10 10 0 R/GS11 11 0 R>>/ProcSet[/PDF/Text/ImageB/ImageC/ImageI] >>/MediaBox[ 0 0 595.32 841.92] /Contents 4 0 R/Group<</Type/Group/S/Transparency/CS/DeviceRGB>>/Tabs/S/StructParents 0>>
+endobj
+4 0 obj
+<</Filter/FlateDecode/Length 3054>>
+stream
+x��\K���0�AG�@k�&4�k�����`���H6�����Q����Y`�g$>>?YK�}��߿~��?^~�v�ß�����O�~�v�����������iG:9Ȟ���������߾�>=?�_��>�Ў�����'(J:�i�&:-U?���_�O����\0����J��BI��Б&��RZڟ����Gw�������ߏ������^���t�(����5��텁�O���jDx{<B���,&��������0�j�?
+<��ՀА9�������̖C1��f6KV����o2ݪ���f�?b�x��1B�m<H�@������(B�����������pK�mf�u��}{*ASش��j(w��R��
+n�dh�h��뇫�ψ���)Mڱ%aL�����m93��T޶�t��ek�"�mE��c,����㼅������x������xt_�����F����hq���#�FK�&F��^�NϸW#��
+o��LCy̢R�/�gt���r�u�/e�W��b���Bdl��"�7KT����{�'̊�+���
+0�
+�`�`���V�Pb�Q
+�!_�P%�7T���'?r����i`�aKJ�x��6�v+��F����ÊxY���V
+`���
+�e�j9\�z�|V�m��!���a��t�uC�P��p�/��\��j�`Gl$"�������m�gԿ�ꔤf赮l��\����b��^P����В�9��8��̑yv3K��^H�z6�6V)���Gi��se�i��ђ֐����l��lg�!tK�f�尐�3���S����mdɿ��Z��x�W��<�<Կ��4�0�����]KԨ�)L$L�&��N
+�r���lF�lg�)�[S��,ua[�v�-v����ֶi�-�-i@4ئ��IߖWg+��;�j�*�~U9�
+D�������A�m�ZKס�)Klh`IiG��Y�v��e���ٌ����Y�^�c��u�P=��JW@N2=2st�����4��U��a�ݬ��n�R��e�8+��/���܌����=*�Qz��WyKFP��yr�a����㗨iy�J���ݺ�ږ,x�¤��P�MZ����e��ٌ����7ZZ9G��Z�r�>�-�+��BPb��&)�j��I���#�ZW!^v2�IE���cm��|g����=,˜:�I�7�� Yq�
+���[a�9[�Hћ���J3�2Lvo��Id��k*��6ci�3L{������ɹE5��D��9O��&�6�ճe�@��T���Z٤%VdC&�+��Sm�͆^h�����f����]l�/Scz]�Q��X0U�	<��!���S���v��B{ۥd��&iK�K{�����J;��'��y,��,�.l�����fw
+6rE
+6J�v���W*˦���
 """
 
 full_text = workout_text + "\n\n" + diet_text
