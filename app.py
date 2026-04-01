@@ -119,7 +119,7 @@ def chunk_text(text, chunk_size=500, overlap=50):
 # We use a free open source model from HuggingFace API
 # ============================================================
 def get_embeddings(texts):
-    API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
+API_URL = "https://router.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
     headers = {"Content-Type": "application/json"}
     
     all_embeddings = []
