@@ -1,6 +1,17 @@
+# ============================================================
+# RAG CHATBOT WITH VECTOR DATABASE
+# Step 1 - Load text from PDFs
+# Step 2 - Chunk the text
+# Step 3 - Embed each chunk (convert to numbers)
+# Step 4 - Store embeddings in FAISS vector database
+# Step 5 - Search vector DB for relevant chunks
+# Step 6 - Send chunks + question to AI for answer
+# ============================================================
+
 import streamlit as st
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+import faiss
+import requests
 from groq import Groq
 
 # ============================================================
@@ -10,7 +21,7 @@ api_key = st.secrets["GROQ_API_KEY"]
 client = Groq(api_key=api_key)
 
 # ============================================================
-# YOUR PDF CONTENT — paste your PDF text here
+# STEP 1 - YOUR PDF DATA
 # ============================================================
 workout_text = """
 COMPLETE WORKOUT GUIDE
@@ -33,7 +44,7 @@ Strength Training
 Strength training involves lifting weights to build muscle and improve strength. It includes compound exercises like squats, deadlifts, and bench press, which target multiple muscles at once. It also includes isolation exercises like bicep curls and tricep extensions, which focus on specific muscles. Proper form and controlled movements are very important to avoid injuries and maximize results.
 
 Cardio Training
-Cardio exercises improve heart health and help in burning calories. There are different types of cardio such as walking, jogging, cycling, and high-intensity interval training (HIIT). For weight loss, cardio should be done frequently. For muscle gain or weight gain, cardio should be limited so that it does not interfere with muscle recovery.
+Cardio exercises improve heart health and help in burning calories. There are different types of cardio such as walking, jogging, cycling, and high-intensity interval training HIIT. For weight loss, cardio should be done frequently. For muscle gain or weight gain, cardio should be limited so that it does not interfere with muscle recovery.
 
 Weekly Workout Plan
 A weekly workout plan should be balanced and realistic. For weight loss, 5 to 6 workout days including cardio and weights are recommended. For muscle gain, 4 to 5 days of strength training with limited cardio works best. For weight gain, focus more on strength training with minimal cardio. Consistency is more important than doing very intense workouts occasionally.
@@ -85,10 +96,12 @@ Common Diet Mistakes
 Common mistakes include skipping meals, not consuming enough protein, eating too much junk food, and not tracking calorie intake. Avoiding these mistakes will help you achieve your fitness goals faster and more effectively.
 """
 
+# Combine both PDFs
 full_text = workout_text + "\n\n" + diet_text
 
 # ============================================================
-# CHUNK
+# STEP 2 - CHUNK: Split text into small pieces
+# Why: AI works better with small focused chunks
 # ============================================================
 def chunk_text(text, chunk_size=500, overlap=50):
     chunks = []
@@ -101,25 +114,60 @@ def chunk_text(text, chunk_size=500, overlap=50):
     return chunks
 
 # ============================================================
-# BUILD SEARCH INDEX
+# STEP 3 - EMBED: Convert each chunk into numbers (vectors)
+# Why: So computer can understand meaning and do similarity search
+# We use a free open source model from HuggingFace API
 # ============================================================
-def build_vectorizer(chunks):
-    vectorizer = TfidfVectorizer()
-    vectors = vectorizer.fit_transform(chunks)
-    return vectorizer, vectors
+def get_embeddings(texts):
+    API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
+    headers = {"Content-Type": "application/json"}
+    
+    all_embeddings = []
+    for text in texts:
+        response = requests.post(
+            API_URL,
+            headers=headers,
+            json={"inputs": text, "options": {"wait_for_model": True}}
+        )
+        embedding = response.json()
+        # Handle nested list response
+        if isinstance(embedding[0], list):
+            embedding = embedding[0]
+        all_embeddings.append(embedding)
+    
+    return np.array(all_embeddings, dtype="float32")
 
 # ============================================================
-# SEARCH
+# STEP 4 - VECTOR DATABASE: Store embeddings in FAISS
+# Why: FAISS lets us search millions of vectors super fast
+# This is the actual vector database storing all chunk vectors
 # ============================================================
-def search(question, vectorizer, vectors, chunks, top_k=3):
-    question_vector = vectorizer.transform([question])
-    similarities = cosine_similarity(question_vector, vectors)[0]
-    top_indices = similarities.argsort()[-top_k:][::-1]
-    results = [chunks[i] for i in top_indices]
-    return results
+def build_vector_db(embeddings):
+    dimension = embeddings.shape[1]
+    # IndexFlatL2 = searches by smallest distance (most similar)
+    index = faiss.IndexFlatL2(dimension)
+    index.add(embeddings)
+    return index
 
 # ============================================================
-# ASK AI — using Groq (free, fast)
+# STEP 5 - SEARCH: Find most relevant chunks from vector DB
+# Why: We only send the most relevant chunks to AI, not everything
+# ============================================================
+def search_vector_db(question, index, chunks, top_k=3):
+    # Embed the question using same model
+    question_embedding = get_embeddings([question])
+    # Search vector DB for closest chunks
+    distances, indices = index.search(question_embedding, top_k)
+    # Return the actual text of those chunks
+    relevant_chunks = [chunks[i] for i in indices[0]]
+    return relevant_chunks
+
+# ============================================================
+# STEP 6 - RAG PIPELINE: Send question + chunks to AI
+# RAG = Retrieval Augmented Generation
+# Retrieval  = get relevant chunks from vector DB
+# Augmented  = add those chunks to the prompt
+# Generation = AI generates answer using those chunks
 # ============================================================
 def ask_ai(question, relevant_chunks):
     context = "\n\n".join(relevant_chunks)
@@ -150,20 +198,31 @@ ANSWER:"""
 # ============================================================
 st.set_page_config(page_title="Fitness Chatbot", page_icon="💪")
 st.title("💪 Fitness & Diet Chatbot")
-st.caption("Answers based only on your uploaded PDF guides")
+st.caption("Powered by RAG pipeline with FAISS vector database")
 
 @st.cache_resource
 def setup():
-    st.write("✂️ Chunking text...")
+    st.write("📄 Step 1 - Loading PDF text...")
+    st.write(f"✅ Loaded {len(full_text)} characters")
+
+    st.write("✂️ Step 2 - Chunking text...")
     chunks = chunk_text(full_text)
     st.write(f"✅ Created {len(chunks)} chunks")
-    st.write("🔢 Building search index...")
-    vectorizer, vectors = build_vectorizer(chunks)
-    st.write("✅ Ready!")
-    return chunks, vectorizer, vectors
 
-chunks, vectorizer, vectors = setup()
+    st.write("🔢 Step 3 - Embedding chunks into vectors...")
+    embeddings = get_embeddings(chunks)
+    st.write(f"✅ Each chunk converted to {embeddings.shape[1]} dimensional vector")
 
+    st.write("🗄️ Step 4 - Storing vectors in FAISS vector database...")
+    index = build_vector_db(embeddings)
+    st.write(f"✅ Vector database built with {index.ntotal} vectors stored")
+
+    st.write("🚀 RAG pipeline ready!")
+    return chunks, index
+
+chunks, index = setup()
+
+# Chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -175,9 +234,13 @@ if user_question := st.chat_input("Ask about your workout or diet..."):
     st.session_state.messages.append({"role": "user", "content": user_question})
     with st.chat_message("user"):
         st.markdown(user_question)
+
     with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
-            relevant_chunks = search(user_question, vectorizer, vectors, chunks)
+        with st.spinner("Searching vector database..."):
+            # Step 5 - Search vector DB
+            relevant_chunks = search_vector_db(user_question, index, chunks)
+            # Step 6 - Get AI answer
             answer = ask_ai(user_question, relevant_chunks)
         st.markdown(answer)
+
     st.session_state.messages.append({"role": "assistant", "content": answer})
