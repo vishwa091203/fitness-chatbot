@@ -14,52 +14,162 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 # YOUR PDF CONTENT
 # ============================================================
 workout_text = """
-%PDF-1.7
-%����
-1 0 obj
-<</Type/Catalog/Pages 2 0 R/Lang(en) /StructTreeRoot 33 0 R/MarkInfo<</Marked true>>/Metadata 144 0 R/ViewerPreferences 145 0 R>>
-endobj
-2 0 obj
-<</Type/Pages/Count 3/Kids[ 3 0 R 28 0 R 30 0 R] >>
-endobj
-3 0 obj
-<</Type/Page/Parent 2 0 R/Resources<</Font<</F1 5 0 R/F2 12 0 R/F3 17 0 R/F4 19 0 R/F5 24 0 R/F6 26 0 R>>/ExtGState<</GS10 10 0 R/GS11 11 0 R>>/ProcSet[/PDF/Text/ImageB/ImageC/ImageI] >>/MediaBox[ 0 0 595.32 841.92] /Contents 4 0 R/Group<</Type/Group/S/Transparency/CS/DeviceRGB>>/Tabs/S/StructParents 0>>
-endobj
-4 0 obj
-<</Filter/FlateDecode/Length 3455>>
-stream
-x��\K�#��0�������
+     PDF 1: COMPLETE WORKOUT GUIDE 
+       INDEX 
+1. Introduction to Fitness Goals  
+2. Types of Workout Goals  
+3. Workout Split  
+4. Training Intensity  
+5. Strength Training (Weights)  
+6. Cardio Training  
+7. Weekly Workout Plan  
+8. Rest and Recovery  
+9. Progression Strategy  
+10. Common Mistakes  
+ 
+                                      Introduction to Fitness Goals 
+Fitness training should always be based on a clear goal such as weight loss, weight gain, 
+or muscle gain. Each goal requires a different approach in terms of exercises, intensity, 
+and frequency. Without a clear goal, workouts become random and results will be slow 
+or inconsistent. A structured plan helps in tracking progress and staying motivated over 
+time. 
+ 
+       Types of Workout Goals 
+Weight Loss 
+Weight loss focuses on burning calories and reducing body fat. This involves a 
+combination of cardio exercises and light to moderate weight training. Higher 
+repetitions with shorter rest periods help in increasing calorie burn and improving 
+endurance. 
+Weight Gain 
+Weight gain focuses on increasing overall body mass. This requires strength training 
+with moderate repetitions and slightly heavier weights. The goal is to stimulate muscle 
+growth while also maintaining a calorie surplus. 
+Muscle Gain 
+Muscle gain, also called hypertrophy, focuses on building muscle size and strength. This 
+involves lifting heavier weights with controlled movements. Rest periods are slightly 
+longer to allow muscles to recover between sets. 
+ 
+    Workout Split 
+Workout split refers to how you divide your workouts across the week. 
+Beginners can start with full-body workouts three times a week, which helps in building 
+a strong foundation. Intermediate individuals can follow upper-body and lower-body 
+splits to train more effectively. Advanced individuals often use push, pull, and leg splits 
+to target specific muscle groups and maximize growth. 
+ 
+  Training Intensity 
+Training intensity refers to how hard your workout is. It is usually based on the 
+percentage of maximum weight you can lift. 
+Beginners should start with lighter weights and focus on proper form. As strength 
+improves, weights should be increased gradually. This concept is known as progressive 
+overload and is essential for muscle growth and strength improvement. 
+ 
+                                   Strength Training (Weights) 
+Strength training involves lifting weights to build muscle and improve strength. It 
+includes compound exercises like squats, deadlifts, and bench press, which target 
+multiple muscles at once. It also includes isolation exercises like bicep curls and tricep 
+extensions, which focus on specific muscles. 
+Proper form and controlled movements are very important to avoid injuries and 
+maximize results. 
+ 
+                   Cardio Training 
+Cardio exercises improve heart health and help in burning calories. There are different 
+types of cardio such as walking, jogging, cycling, and high-intensity interval training 
+(HIIT). 
+For weight loss, cardio should be done frequently. For muscle gain or weight gain, cardio 
+should be limited so that it does not interfere with muscle recovery. 
+Weekly Workout Plan 
+A weekly workout plan should be balanced and realistic. 
+For weight loss, 5 to 6 workout days including cardio and weights are recommended. 
+For muscle gain, 4 to 5 days of strength training with limited cardio works best. For 
+weight gain, focus more on strength training with minimal cardio. 
+Consistency is more important than doing very intense workouts occasionally. 
+Rest and Recovery 
+Rest and recovery are essential parts of any fitness plan. Muscles grow when you rest, 
+not when you are working out. 
+You should aim for 7 to 9 hours of sleep daily. At least one or two rest days per week are 
+necessary to allow the body to recover and prevent injuries. 
+Progression Strategy 
+Progression means gradually increasing the difficulty of your workouts. This can be done 
+by increasing weights, repetitions, or sets over time. 
+Tracking your workouts helps you understand your progress and keeps you motivated. 
+Without progression, the body adapts and results will stop. 
+Common Mistakes 
+Common mistakes include skipping warm-ups, using improper form, overtraining, and 
+not being consistent. 
+Avoiding these mistakes can significantly improve your results and reduce the risk of 
+injuries. 
 """
 
 diet_text = """
-%PDF-1.7
-%����
-1 0 obj
-<</Type/Catalog/Pages 2 0 R/Lang(en) /StructTreeRoot 33 0 R/MarkInfo<</Marked true>>/Metadata 152 0 R/ViewerPreferences 153 0 R>>
-endobj
-2 0 obj
-<</Type/Pages/Count 3/Kids[ 3 0 R 28 0 R 30 0 R] >>
-endobj
-3 0 obj
-<</Type/Page/Parent 2 0 R/Resources<</Font<</F1 5 0 R/F2 12 0 R/F3 17 0 R/F4 19 0 R/F5 24 0 R/F6 26 0 R>>/ExtGState<</GS10 10 0 R/GS11 11 0 R>>/ProcSet[/PDF/Text/ImageB/ImageC/ImageI] >>/MediaBox[ 0 0 595.32 841.92] /Contents 4 0 R/Group<</Type/Group/S/Transparency/CS/DeviceRGB>>/Tabs/S/StructParents 0>>
-endobj
-4 0 obj
-<</Filter/FlateDecode/Length 3054>>
-stream
-x��\K���0�AG�@k�&4�k�����`���H6�����Q����Y`�g$>>?YK�}��߿~��?^~�v�ß�����O�~�v�����������iG:9Ȟ���������߾�>=?�_��>�Ў�����'(J:�i�&:-U?���_�O����\0����J��BI��Б&��RZڟ����Gw�������ߏ������^���t�(����5��텁�O���jDx{<B���,&��������0�j�?
-<��ՀА9�������̖C1��f6KV����o2ݪ���f�?b�x��1B�m<H�@������(B�����������pK�mf�u��}{*ASش��j(w��R��
-n�dh�h��뇫�ψ���)Mڱ%aL�����m93��T޶�t��ek�"�mE��c,����㼅������x������xt_�����F����hq���#�FK�&F��^�NϸW#��
-o��LCy̢R�/�gt���r�u�/e�W��b���Bdl��"�7KT����{�'̊�+���
-0�
-�`�`���V�Pb�Q
-�!_�P%�7T���'?r����i`�aKJ�x��6�v+��F����ÊxY���V
-`���
-�e�j9\�z�|V�m��!���a��t�uC�P��p�/��\��j�`Gl$"�������m�gԿ�ꔤf赮l��\����b��^P����В�9��8��̑yv3K��^H�z6�6V)���Gi��se�i��ђ֐����l��lg�!tK�f�尐�3���S����mdɿ��Z��x�W��<�<Կ��4�0�����]KԨ�)L$L�&��N
-�r���lF�lg�)�[S��,ua[�v�-v����ֶi�-�-i@4ئ��IߖWg+��;�j�*�~U9�
-D�������A�m�ZKס�)Klh`IiG��Y�v��e���ٌ����Y�^�c��u�P=��JW@N2=2st�����4��U��a�ݬ��n�R��e�8+��/���܌����=*�Qz��WyKFP��yr�a����㗨iy�J���ݺ�ږ,x�¤��P�MZ����e��ٌ����7ZZ9G��Z�r�>�-�+��BPb��&)�j��I���#�ZW!^v2�IE���cm��|g����=,˜:�I�7�� Yq�
-���[a�9[�Hћ���J3�2Lvo��Id��k*��6ci�3L{������ɹE5��D��9O��&�6�ճe�@��T���Z٤%VdC&�+��Sm�͆^h�����f����]l�/Scz]�Q��X0U�	<��!���S���v��B{ۥd��&iK�K{�����J;��'��y,��,�.l�����fw
-6rE
-6J�v���W*˦���
+     PDF 2: COMPLETE DIET & NUTRITION GUIDE 
+       INDEX 
+1. Introduction to Nutrition  
+2. Macronutrients  
+3. Micronutrients  
+4. Diet for Weight Loss  
+5. Diet for Weight Gain  
+6. Diet for Muscle Gain  
+7. Protein Intake  
+8. Fiber and Digestion  
+9. Hydration  
+10. Sample Diet Plans  
+11. Common Diet Mistakes  
+ 
+            Introduction to Nutrition 
+Nutrition is the foundation of fitness. No matter how hard you train, without a proper 
+diet you will not see good results. 
+A balanced diet provides energy, supports recovery, and helps in achieving your fitness 
+goals effectively. 
+ 
+         Macronutrients 
+Macronutrients are nutrients required in large amounts. 
+Protein helps in muscle repair and growth. Carbohydrates provide energy for daily 
+activities and workouts. Fats support hormone function and overall health. 
+A proper balance of all three is necessary for optimal performance. 
+ 
+       Micronutrients 
+Micronutrients include vitamins and minerals that are required in smaller amounts but 
+are equally important. 
+They help in immunity, recovery, and overall body functions. Fruits and vegetables are 
+the best sources of micronutrients. 
+Diet for Weight Loss 
+Weight loss requires a calorie deficit, which means consuming fewer calories than you 
+burn. 
+Focus on high-protein foods, reduce sugar intake, and avoid processed foods. Eating 
+whole foods and maintaining portion control is key. 
+Diet for Weight Gain 
+Weight gain requires a calorie surplus, meaning you consume more calories than you 
+burn. 
+Include calorie-dense foods like rice, nuts, milk, and healthy fats. Eating frequent meals 
+throughout the day helps in increasing calorie intake. 
+Diet for Muscle Gain 
+Muscle gain requires a balanced diet with high protein, moderate carbohydrates, and 
+healthy fats. 
+Post-workout nutrition is very important as it helps in muscle recovery and growth. 
+Protein Intake 
+Protein intake depends on your body weight and fitness goals. 
+For muscle gain, you should consume around 1.6 to 2.2 grams of protein per kilogram of 
+body weight. Good sources include eggs, chicken, paneer, lentils, and protein 
+supplements. 
+Fiber and Digestion 
+Fiber is important for digestion and gut health. It helps prevent constipation and 
+improves nutrient absorption. 
+Include fruits, vegetables, and whole grains in your daily diet. 
+Hydration 
+Water is essential for all body functions. Staying hydrated improves performance, 
+digestion, and recovery. 
+You should aim to drink at least 3 to 4 liters of water daily. 
+Sample Diet Plans 
+For weight loss, include low-calorie and high-protein meals such as oats, vegetables, 
+and lean protein. 
+For weight gain, include calorie-rich meals like rice, eggs, milk, and nuts. 
+For muscle gain, include protein in every meal and maintain a balanced intake of all 
+nutrients. 
+Common Diet Mistakes 
+Common mistakes include skipping meals, not consuming enough protein, eating too 
+much junk food, and not tracking calorie intake. 
+Avoiding these mistakes will help you achieve your fitness goals faster and more 
+effectively. 
 """
 
 full_text = workout_text + "\n\n" + diet_text
