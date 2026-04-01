@@ -1,17 +1,16 @@
 import streamlit as st
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import google.generativeai as genai
+from groq import Groq
 
 # ============================================================
-# API Key from Streamlit Secrets
+# API Key
 # ============================================================
-api_key = st.secrets["GEMINI_API_KEY"]
-genai.configure(api_key=api_key)
-model = genai.GenerativeModel("gemini-2.0-flash")
+api_key = st.secrets["GROQ_API_KEY"]
+client = Groq(api_key=api_key)
 
 # ============================================================
-# YOUR PDF CONTENT
+# YOUR PDF CONTENT — paste your PDF text here
 # ============================================================
 workout_text = """
 Workout Split Guide.
@@ -20,17 +19,19 @@ Day 2 is Back and Biceps. Do Pull Ups for 4 sets of 8 reps. Do Barbell Curls for
 Day 3 is Rest Day.
 Day 4 is Shoulders. Do Overhead Press for 4 sets of 10 reps. Do Lateral Raises for 3 sets of 15 reps.
 Day 5 is Legs. Do Squats for 4 sets of 10 reps. Do Leg Press for 3 sets of 12 reps.
-Day 6 and Day 7 are Rest Days. 
+Day 6 and Day 7 are Rest Days.
 """
 
-diet_text = """Diet Guide.
+diet_text = """
+Diet Guide.
 Breakfast should include Oats with banana and peanut butter.
 Lunch should include Chicken with rice and vegetables.
 Dinner should include Salmon with sweet potato and broccoli.
 Snacks can be Greek yogurt, nuts, or protein shake.
 Drink at least 3 litres of water every day.
 Daily protein target is 150 grams.
-Daily calories target is 2500 calories """
+Daily calories target is 2500 calories.
+"""
 
 full_text = workout_text + "\n\n" + diet_text
 
@@ -66,7 +67,7 @@ def search(question, vectorizer, vectors, chunks, top_k=3):
     return results
 
 # ============================================================
-# ASK AI — using Gemini (free, no credit card needed)
+# ASK AI — using Groq (free, fast)
 # ============================================================
 def ask_ai(question, relevant_chunks):
     context = "\n\n".join(relevant_chunks)
@@ -84,8 +85,11 @@ USER QUESTION:
 ANSWER:"""
 
     try:
-        response = model.generate_content(prompt)
-        return response.text
+        response = client.chat.completions.create(
+            model="llama3-8b-8192",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response.choices[0].message.content
     except Exception as e:
         return f"Error: {str(e)}"
 
