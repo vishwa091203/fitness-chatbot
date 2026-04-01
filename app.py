@@ -8,7 +8,7 @@ import google.generativeai as genai
 # ============================================================
 api_key = st.secrets["GEMINI_API_KEY"]
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-2.0-flash")
 
 # ============================================================
 # YOUR PDF CONTENT
@@ -27,14 +27,14 @@ workout_text = """
 9. Progression Strategy  
 10. Common Mistakes  
  
-                                      Introduction to Fitness Goals 
+Introduction to Fitness Goals 
 Fitness training should always be based on a clear goal such as weight loss, weight gain, 
 or muscle gain. Each goal requires a different approach in terms of exercises, intensity, 
 and frequency. Without a clear goal, workouts become random and results will be slow 
 or inconsistent. A structured plan helps in tracking progress and staying motivated over 
 time. 
  
-       Types of Workout Goals 
+Types of Workout Goals 
 Weight Loss 
 Weight loss focuses on burning calories and reducing body fat. This involves a 
 combination of cardio exercises and light to moderate weight training. Higher 
@@ -49,21 +49,21 @@ Muscle gain, also called hypertrophy, focuses on building muscle size and streng
 involves lifting heavier weights with controlled movements. Rest periods are slightly 
 longer to allow muscles to recover between sets. 
  
-    Workout Split 
+Workout Split 
 Workout split refers to how you divide your workouts across the week. 
 Beginners can start with full-body workouts three times a week, which helps in building 
 a strong foundation. Intermediate individuals can follow upper-body and lower-body 
 splits to train more effectively. Advanced individuals often use push, pull, and leg splits 
 to target specific muscle groups and maximize growth. 
  
-  Training Intensity 
+Training Intensity 
 Training intensity refers to how hard your workout is. It is usually based on the 
 percentage of maximum weight you can lift. 
 Beginners should start with lighter weights and focus on proper form. As strength 
 improves, weights should be increased gradually. This concept is known as progressive 
 overload and is essential for muscle growth and strength improvement. 
  
-                                   Strength Training (Weights) 
+Strength Training (Weights) 
 Strength training involves lifting weights to build muscle and improve strength. It 
 includes compound exercises like squats, deadlifts, and bench press, which target 
 multiple muscles at once. It also includes isolation exercises like bicep curls and tricep 
@@ -71,7 +71,7 @@ extensions, which focus on specific muscles.
 Proper form and controlled movements are very important to avoid injuries and 
 maximize results. 
  
-                   Cardio Training 
+Cardio Training 
 Cardio exercises improve heart health and help in burning calories. There are different 
 types of cardio such as walking, jogging, cycling, and high-intensity interval training 
 (HIIT). 
@@ -100,9 +100,8 @@ Avoiding these mistakes can significantly improve your results and reduce the ri
 injuries. 
 """
 
-diet_text = """
-     PDF 2: COMPLETE DIET & NUTRITION GUIDE 
-       INDEX 
+diet_text = """PDF 2: COMPLETE DIET & NUTRITION GUIDE 
+INDEX 
 1. Introduction to Nutrition  
 2. Macronutrients  
 3. Micronutrients  
@@ -115,19 +114,19 @@ diet_text = """
 10. Sample Diet Plans  
 11. Common Diet Mistakes  
  
-            Introduction to Nutrition 
+Introduction to Nutrition 
 Nutrition is the foundation of fitness. No matter how hard you train, without a proper 
 diet you will not see good results. 
 A balanced diet provides energy, supports recovery, and helps in achieving your fitness 
 goals effectively. 
  
-         Macronutrients 
+Macronutrients 
 Macronutrients are nutrients required in large amounts. 
 Protein helps in muscle repair and growth. Carbohydrates provide energy for daily 
 activities and workouts. Fats support hormone function and overall health. 
 A proper balance of all three is necessary for optimal performance. 
  
-       Micronutrients 
+Micronutrients 
 Micronutrients include vitamins and minerals that are required in smaller amounts but 
 are equally important. 
 They help in immunity, recovery, and overall body functions. Fruits and vegetables are 
@@ -169,7 +168,7 @@ Common Diet Mistakes
 Common mistakes include skipping meals, not consuming enough protein, eating too 
 much junk food, and not tracking calorie intake. 
 Avoiding these mistakes will help you achieve your fitness goals faster and more 
-effectively. 
+effectively.  
 """
 
 full_text = workout_text + "\n\n" + diet_text
