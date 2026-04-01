@@ -118,41 +118,12 @@ def chunk_text(text, chunk_size=500, overlap=50):
 # Why: So computer can understand meaning and do similarity search
 # We use a free open source model from HuggingFace API
 # ============================================================
-def get_embeddings(texts):
-    API_URL = "https://router.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
-    headers = {"Content-Type": "application/json"}
-    
-    all_embeddings = []
-    for text in texts:
-        response = requests.post(
-            API_URL,
-            headers=headers,
-            json={"inputs": text, "options": {"wait_for_model": True}}
-        )
-        result = response.json()
-        
-        # Handle all possible response formats from HuggingFace
-        if isinstance(result, list):
-            if len(result) > 0 and isinstance(result[0], list):
-                # Format: [[0.1, 0.2, ...]] → take first item
-                embedding = result[0]
-                if isinstance(embedding[0], list):
-                    # Format: [[[0.1, 0.2, ...]]] → average across tokens
-                    embedding = np.mean(embedding, axis=0).tolist()
-            else:
-                # Format: [0.1, 0.2, ...] → use directly
-                embedding = result
-        elif isinstance(result, dict) and "error" in result:
-            # API returned an error - show it clearly
-            st.error(f"HuggingFace API error: {result['error']}")
-            st.stop()
-        else:
-            st.error(f"Unexpected response: {result}")
-            st.stop()
-            
-        all_embeddings.append(embedding)
-    
-    return np.array(all_embeddings, dtype="float32")
+def get_embeddings(chunks):
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    vectorizer = TfidfVectorizer()
+    tfidf_matrix = vectorizer.fit_transform(chunks)
+    embeddings = tfidf_matrix.toarray().astype("float32")
+    return embeddings, vectorizer
 
 # ============================================================
 # STEP 4 - VECTOR DATABASE: Store embeddings in FAISS
@@ -170,12 +141,13 @@ def build_vector_db(embeddings):
 # STEP 5 - SEARCH: Find most relevant chunks from vector DB
 # Why: We only send the most relevant chunks to AI, not everything
 # ============================================================
-def search_vector_db(question, index, chunks, top_k=3):
-    # Embed the question using same model
-    question_embedding = get_embeddings([question])
-    # Search vector DB for closest chunks
+def search_vector_db(question, index, chunks, vectorizer, top_k=3):
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    # Embed the question using same vectorizer
+    question_embedding = vectorizer.transform([question]).toarray().astype("float32")
+    # Search FAISS vector DB for closest chunks
     distances, indices = index.search(question_embedding, top_k)
-    # Return the actual text of those chunks
+    # Return actual text of matching chunks
     relevant_chunks = [chunks[i] for i in indices[0]]
     return relevant_chunks
 
@@ -227,7 +199,7 @@ def setup():
     st.write(f"✅ Created {len(chunks)} chunks")
 
     st.write("🔢 Step 3 - Embedding chunks into vectors...")
-    embeddings = get_embeddings(chunks)
+    embeddings, vectorizer = get_embeddings(chunks)
     st.write(f"✅ Each chunk converted to {embeddings.shape[1]} dimensional vector")
 
     st.write("🗄️ Step 4 - Storing vectors in FAISS vector database...")
@@ -235,9 +207,9 @@ def setup():
     st.write(f"✅ Vector database built with {index.ntotal} vectors stored")
 
     st.write("🚀 RAG pipeline ready!")
-    return chunks, index
+    return chunks, index, vectorizer
 
-chunks, index = setup()
+chunks, index, vectorizer = setup()
 
 # Chat history
 if "messages" not in st.session_state:
@@ -255,7 +227,7 @@ if user_question := st.chat_input("Ask about your workout or diet..."):
     with st.chat_message("assistant"):
         with st.spinner("Searching vector database..."):
             # Step 5 - Search vector DB
-            relevant_chunks = search_vector_db(user_question, index, chunks)
+            relevant_chunks = search_vector_db(user_question, index, chunks, vectorizer)
             # Step 6 - Get AI answer
             answer = ask_ai(user_question, relevant_chunks)
         st.markdown(answer)
