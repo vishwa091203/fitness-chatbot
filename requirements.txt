@@ -1,4 +1,4 @@
 streamlit
 scikit-learn
-openai
 pypdf
+google-generativeai
